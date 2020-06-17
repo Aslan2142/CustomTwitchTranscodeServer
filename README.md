@@ -4,10 +4,6 @@ Downloads and transcodes twitch stream using ffmpeg and sends transcoded data to
 Version 0.9 Alpha<br />
 
 
-## Installation
-Check **[Releases](https://github.com/Aslan2142/CustomTwitchTranscodeServer/releases)** section
-
-
 ## How To Use
 Setup settings.json and launch program<br />
 

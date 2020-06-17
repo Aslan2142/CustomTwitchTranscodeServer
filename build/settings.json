@@ -1,6 +1,6 @@
 {
-  "root_path": ".",
-  "channel": "",
+  "root_path": "/home/aslan/Downloads/test",
+  "channel": "sweet_anita",
   "server_port": "2142",
   "transcoded_video_height": "360",
   "transcoded_video_bitrate": "600",

@@ -1,0 +1,4 @@
+/home/aslan/Development/C/QT/CustomTwitchTranscodeServer/build/CMakeFiles/rebuild_cache.dir
+/home/aslan/Development/C/QT/CustomTwitchTranscodeServer/build/CMakeFiles/edit_cache.dir
+/home/aslan/Development/C/QT/CustomTwitchTranscodeServer/build/CMakeFiles/CustomTwitchTranscodeServer.dir
+/home/aslan/Development/C/QT/CustomTwitchTranscodeServer/build/CMakeFiles/CustomTwitchTranscodeServer_autogen.dir

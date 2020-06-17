@@ -57,9 +57,8 @@ void ClientSocket::process_connection() const
 void ClientSocket::disconnected()
 {
     connection->close();
+    QThread::sleep(1);
     delete connection;
-    delete this;
-    current_thread->deleteLater();
 }
 
 QByteArray* ClientSocket::load_file(const QString& file_path) const
