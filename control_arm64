@@ -1,0 +1,10 @@
+Package: customtwitchtranscodeserver
+Version: 0.9.0
+Section: utils
+Priority: optional
+Architecture: arm64
+Depends: ffmpeg
+Essential: no
+Installed-Size: 1800
+Maintainer: Aslan2142
+Description: Downloads and transcodes twitch stream using ffmpeg and sends transcoded data to clients

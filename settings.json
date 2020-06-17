@@ -1,0 +1,10 @@
+{
+  "root_path": "/home/aslan/Downloads/test",
+  "channel": "kwitty23",
+  "server_port": "2142",
+  "transcoded_video_height": "360",
+  "transcoded_video_bitrate": "600",
+  "update_interval": "5000",
+  "preload_chunks": "4",
+  "keep_chunks": "25"
+}
