@@ -138,5 +138,7 @@ QByteArray StreamDownloader::get_reply(const QString& url, bool use_client_id) c
     QObject::connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
     loop.exec();
 
+    reply->deleteLater();
+
     return reply->readAll();
 }
