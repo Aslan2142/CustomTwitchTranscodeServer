@@ -5,6 +5,6 @@
   "transcoded_video_height": "360",
   "transcoded_video_bitrate": "600",
   "update_interval": "5000",
-  "preload_chunks": "4",
+  "chunk_buffer_size": "10",
   "keep_chunks": "25"
 }

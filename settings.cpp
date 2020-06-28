@@ -21,7 +21,7 @@ void Settings::load(const QString& path)
     (*data)["transcoded_video_height"] = jsonObject["transcoded_video_height"].toString();
     (*data)["transcoded_video_bitrate"] = jsonObject["transcoded_video_bitrate"].toString();
     (*data)["update_interval"] = jsonObject["update_interval"].toString();
-    (*data)["preload_chunks"] = jsonObject["preload_chunks"].toString();
+    (*data)["chunk_buffer_size"] = jsonObject["chunk_buffer_size"].toString();
     (*data)["keep_chunks"] = jsonObject["keep_chunks"].toString();
 }
 

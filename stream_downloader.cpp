@@ -1,6 +1,7 @@
 #include "stream_downloader.h"
 
 unsigned long StreamDownloader::chunk_id = 0;
+unsigned long StreamDownloader::chunk_buffer_id = 0;
 
 StreamDownloader::StreamDownloader(QObject *parent) : QObject(parent)
 {
@@ -38,12 +39,14 @@ void StreamDownloader::download_stream_data()
 {
     for (int i = 0; i < ts_links.length(); i++)
     {
+        chunk_id++;
+
         QByteArray ts_file = get_reply(ts_links[i], false);
-        QString root_path = settings.get_string("root_path", ".");
-        QString output_path = root_path + "/chunk_" + QString::number(chunk_id + 1) + ".ts";
-        QString output_path_transcoded = root_path + "/chunk_transcoded_" + QString::number(chunk_id + 1) + ".ts";
-        QString output_path_old = root_path + "/chunk_" + QString::number(chunk_id + 1 - keep_chunks) + ".ts";
-        QString output_path_transcoded_old = root_path + "/chunk_transcoded_" + QString::number(chunk_id + 1 - keep_chunks) + ".ts";
+
+        QString output_path = root_path + "/chunk_" + QString::number(chunk_id) + ".ts";
+        QString output_path_transcoded = root_path + "/chunk_transcoded_" + QString::number(chunk_id) + ".ts";
+        QString output_path_old = root_path + "/chunk_" + QString::number(chunk_id - keep_chunks) + ".ts";
+        QString output_path_transcoded_old = root_path + "/chunk_transcoded_" + QString::number(chunk_buffer_id - keep_chunks) + ".ts";
         qDebug() << output_path;
 
         if (QFile::exists(output_path)) QFile::remove(output_path);
@@ -59,7 +62,10 @@ void StreamDownloader::download_stream_data()
         transcode(output_path, output_path_transcoded);
         QFile::remove(output_path);
 
-        chunk_id++;
+        if (chunk_id % chunk_buffer_size == 0 && chunk_id > 0)
+        {
+            make_buffer_chunk();
+        }
     }
 }
 
@@ -73,7 +79,35 @@ void StreamDownloader::transcode(const QString& input, const QString& output)
 {
     QProcess ffmpeg_process;
     ffmpeg_process.setProgram("ffmpeg");
-    ffmpeg_process.setArguments({ "-i", input, "-c:a", "copy", "-c:v", "libx264", "-b:v", settings.get_string("transcoded_video_bitrate", "600") + "k", "-preset", "veryfast", "-vf", "scale=-1:" + settings.get_string("transcoded_video_height", "360"), output });
+    ffmpeg_process.setArguments({ "-i", input, "-c:a", "copy", "-c:v", "libx264", "-b:v", QString::number(transcoded_video_bitrate) + "k", "-preset", "veryfast", "-vf", "scale=-1:" + QString::number(transcoded_video_height), output });
+    ffmpeg_process.start();
+    ffmpeg_process.waitForFinished();
+}
+
+void StreamDownloader::make_buffer_chunk()
+{
+    chunk_buffer_id++;
+
+    QString output_path = root_path + "/chunk_transcoded_buffer_" + QString::number(chunk_buffer_id) + ".mp4";
+    QString file_list_path = root_path + "/list.txt";
+
+    if (QFile::exists(output_path)) QFile::remove(output_path);
+    if (QFile::exists(file_list_path)) QFile::remove(file_list_path);
+
+    QFile file_list(file_list_path);
+    file_list.open(QIODevice::WriteOnly);
+    for (unsigned long i = chunk_id - (chunk_buffer_size - 1); i <= chunk_id; i++)
+    {
+        QString input_path = "chunk_transcoded_" + QString::number(i) + ".ts";
+        file_list.write("file '");
+        file_list.write(input_path.toUtf8());
+        file_list.write("'\n");
+    }
+    file_list.close();
+
+    QProcess ffmpeg_process;
+    ffmpeg_process.setProgram("ffmpeg");
+    ffmpeg_process.setArguments({ "-f", "concat", "-safe", "0", "-i", file_list_path, "-c", "copy", output_path });
     ffmpeg_process.start();
     ffmpeg_process.waitForFinished();
 }

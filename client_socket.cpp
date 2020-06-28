@@ -10,7 +10,8 @@ ClientSocket::ClientSocket(QTcpServer *server, QThread *thread, QObject *parent)
 void ClientSocket::process_connection() const
 {
     qDebug() << "new thread";
-    unsigned long latest_chunk_id = StreamDownloader::chunk_id > preload_chunks ? StreamDownloader::chunk_id - preload_chunks : 1;
+
+    unsigned long latest_chunk_id = StreamDownloader::chunk_buffer_id > 0 ? StreamDownloader::chunk_buffer_id : 1;
 
     while (true)
     {
@@ -28,7 +29,7 @@ void ClientSocket::process_connection() const
         {
             QString chunk = QString::number(latest_chunk_id);
             QString root_path = settings.get_string("root_path", ".");
-            QString path = root_path + "/chunk_transcoded_" + chunk + ".ts";
+            QString path = root_path + "/chunk_transcoded_buffer_" + chunk + ".mp4";
             while (!QFile::exists(path))
             {
                 qDebug() << "sleep on " << latest_chunk_id;
@@ -54,7 +55,7 @@ void ClientSocket::process_connection() const
     }
 }
 
-void ClientSocket::disconnected()
+void ClientSocket::disconnected() // TO-DO Memory Leak needs to be fixed
 {
     /*connection->close();
     QThread::sleep(1);

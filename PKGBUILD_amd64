@@ -1,5 +1,5 @@
 pkgname=customtwitchtranscodeserver
-pkgver=0.9.0
+pkgver=0.9.1
 pkgrel=1
 pkgdesc="Downloads and transcodes twitch stream using ffmpeg and sends transcoded data to clients"
 arch=('x86_64')
@@ -13,7 +13,7 @@ build() {
 
 package() {
 	mkdir -p $pkgdir/usr/bin
-	mkdir -p $pkgdir/usr/share/applications
-	mkdir -p $pkgdir/opt/aslan/icons
+	mkdir -p $pkgdir/usr/share/doc
 	cp CustomTwitchTranscodeServer $pkgdir/usr/bin/customtwitchtranscodeserver
+	cp settings.json $pkgdir/usr/share/doc/example_settings.json
 }

@@ -14,8 +14,6 @@ class StreamServer : public QObject
 public:
     explicit StreamServer(QObject *parent = nullptr);
 
-    unsigned int preload_chunks;
-
     bool start_server(int port) const;
     void stop_server() const;
 

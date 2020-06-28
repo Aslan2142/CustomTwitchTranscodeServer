@@ -18,8 +18,6 @@ class ClientSocket : public QObject
 public:
     explicit ClientSocket(QTcpServer *server, QThread *thread, QObject *parent = nullptr);
 
-    unsigned int preload_chunks = 10;
-
 public slots:
     void process_connection() const;
     void disconnected();
