@@ -13,7 +13,7 @@ build() {
 
 package() {
 	mkdir -p $pkgdir/usr/bin
-	mkdir -p $pkgdir/usr/share/doc
+	mkdir -p $pkgdir/usr/share/doc/customtwitchtranscodeserver
 	cp CustomTwitchTranscodeServer $pkgdir/usr/bin/customtwitchtranscodeserver
-	cp settings.json $pkgdir/usr/share/doc/example_settings.json
+	cp ../settings.json $pkgdir/usr/share/doc/customtwitchtranscodeserver/example_settings.json
 }

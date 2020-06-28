@@ -10,12 +10,12 @@ cd ..
 # Make Folders
 mkdir -p build/customtwitchtranscodeserver_debian/DEBIAN
 mkdir -p build/customtwitchtranscodeserver_debian/usr/bin
-mkdir -p build/customtwitchtranscodeserver_debian/usr/share/doc
+mkdir -p build/customtwitchtranscodeserver_debian/usr/share/doc/customtwitchtranscodeserver
 
 # Copy files
 cp control_$1 build/customtwitchtranscodeserver_debian/DEBIAN/control
 cp build/CustomTwitchTranscodeServer build/customtwitchtranscodeserver_debian/usr/bin/customtwitchtranscodeserver
-cp settings.json build/customtwitchtranscodeserver_debian/usr/share/doc/example_settings.json
+cp settings.json build/customtwitchtranscodeserver_debian/usr/share/doc/customtwitchtranscodeserver/example_settings.json
 
 # Make Package
 dpkg-deb --build build/customtwitchtranscodeserver_debian
