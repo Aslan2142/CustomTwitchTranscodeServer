@@ -15,5 +15,5 @@ package() {
 	mkdir -p $pkgdir/usr/bin
 	mkdir -p $pkgdir/usr/share/doc
 	cp CustomTwitchTranscodeServer $pkgdir/usr/bin/customtwitchtranscodeserver
-	cp settings.json $pkgdir/usr/share/doc/example_settings.json
+	cp ../settings.json $pkgdir/usr/share/doc/example_settings.json
 }
