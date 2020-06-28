@@ -1,7 +1,7 @@
 # CustomTwitchTranscodeServer
 Downloads and transcodes twitch stream using ffmpeg and sends transcoded data to clients<br />
 
-Version 0.9 Alpha<br />
+Version 0.9.1 Alpha<br />
 
 
 ## How To Use
