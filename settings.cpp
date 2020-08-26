@@ -7,14 +7,17 @@ Settings::Settings()
 
 void Settings::load(const QString& path)
 {
+    //Get json data from the file
     QFile file(path);
     file.open(QIODevice::ReadOnly);
     QByteArray file_data = file.readAll();
     file.close();
 
+    //Parse json data
     QJsonDocument json = QJsonDocument::fromJson(file_data);
     QJsonObject jsonObject = json.object();
 
+    //Copy the data into data object
     (*data)["root_path"] = jsonObject["root_path"].toString();
     (*data)["channel"] = jsonObject["channel"].toString();
     (*data)["server_port"] = jsonObject["server_port"].toString();

@@ -21,7 +21,7 @@ private:
     QTcpServer *server;
 
 private slots:
-    void accept_connection() const;
+    void accept_connection() const; //Gets called on a new incoming connection
 
 };
 

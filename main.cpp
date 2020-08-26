@@ -13,10 +13,11 @@ int main(int argc, char *argv[])
     QCoreApplication a(argc, argv);
     qInfo() << "Custom Twitch Transcode Server v0.9.1";
 
-    settings.load("settings.json");
+    settings.load("settings.json"); //Load the settings
 
-    QtConcurrent::run(start_stream_downloader);
+    QtConcurrent::run(start_stream_downloader); //Run the downloader concurently
 
+    //Start the server
     StreamServer *server = new StreamServer();
     if (!server->start_server(settings.get_int("server_port", 2142)))
     {
@@ -29,6 +30,7 @@ int main(int argc, char *argv[])
 
 void start_stream_downloader()
 {
+    //Set settings for the downloader
     StreamDownloader *stream_downloader = new StreamDownloader();
     stream_downloader->root_path = settings.get_string("root_path", ".");
     stream_downloader->channel = settings.get_string("channel", "");
@@ -38,11 +40,13 @@ void start_stream_downloader()
     stream_downloader->chunk_buffer_size = settings.get_int("chunk_buffer_size", 10);
     stream_downloader->keep_chunks = settings.get_int("keep_chunks", 25);
 
+    //Try to authorize
     if (!stream_downloader->authorize())
     {
         qInfo() << "Authorization Error!";
         exit(2);
     }
 
+    //Start the downloader
     stream_downloader->start();
 }
